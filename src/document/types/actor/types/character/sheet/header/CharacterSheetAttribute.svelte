@@ -2,105 +2,63 @@
    import localize from '~/helpers/utility-functions/Localize.js';
    import {getContext} from 'svelte';
    import DocumentIntegerInput from '~/document/svelte-components/input/DocumentIntegerInput.svelte';
-   import Button from '~/helpers/svelte-components/button/Button.svelte';
-   import StatModLabel from '~/helpers/svelte-components/label/StatModLabel.svelte';
+   import DocumentOwnerAttributeButton from '~/document/svelte-components/DocumentOwnerAttributeButton.svelte';
+   import ModifiableStatValueLabel from '~/helpers/svelte-components/label/ModifiableStatValueLabel.svelte';
 
-   // The key / name of the attribute
-   export let key;
+   /** @type string The Attribute that this component represents. */
+   export let attribute;
 
    /** @type object Reference to the Document store. */
    const document = getContext('document');
 
-   // Calculate the tooltipAction for the total value
    /**
-    * @param baseValue
-    * @param equipment
-    * @param effect
-    * @param ability
-    * @param staticMod
+    * Rolls the Attribute from the character.
     */
-   function getTotalValueTooltip(
-      baseValue,
-      equipment,
-      effect,
-      ability,
-      staticMod,
-   ) {
-      // Base label
-      let retVal = `<p>${localize('base')}: ${baseValue}</p>`;
-
-      // Equipment
-      if (equipment !== 0) {
-         retVal += `<p>${localize('equipment')}: ${equipment}</p>`;
-      }
-
-      // Abilities
-      if (ability !== 0) {
-         retVal += `<p>${localize('abilities')}: ${ability}</p>`;
-      }
-
-      // Effects
-      if (effect !== 0) {
-         retVal += `<p>${localize('effects')}: ${effect}</p>`;
-      }
-
-      // Static mod
-      if (staticMod !== 0) {
-         retVal += `<p>${localize('mod')}: ${staticMod}</p>`;
-      }
-
-      return retVal;
+   function onRoll() {
+      $document.system.requestAttributeCheck({attribute: attribute});
    }
-
-   $: totalValueTooltip = getTotalValueTooltip(
-      $document.system.attribute[key].baseValue,
-      $document.system.attribute[key].mod.equipment,
-      $document.system.attribute[key].mod.effect,
-      $document.system.attribute[key].mod.ability,
-      $document.system.attribute[key].mod.static,
-   );
 </script>
 
-<div class="attribute" data-attribute={key}>
-   <!--attribute Label-->
-   <div class="button {key}">
-      <Button
-         on:click={() =>
-            $document.system.requestAttributeCheck(
-               { attribute: key },
-            )}
-         tooltip={localize(`${key}.desc`)}
-      >
-         {localize(key)}
-      </Button>
+<div class="attribute" data-attribute={attribute}>
+   <!--Label Button-->
+   <div class="button">
+      <DocumentOwnerAttributeButton {attribute} on:click={onRoll} tooltip={localize(`${attribute}.desc`)}>
+         {localize(attribute)}
+      </DocumentOwnerAttributeButton>
    </div>
 
    <!--Stats-->
    <div class="stats">
+
       <!--Base Value-->
       <div class="input">
          <DocumentIntegerInput
-            bind:value={$document.system.attribute[key].baseValue}
+            bind:value={$document.system.attribute[attribute].baseValue}
          />
       </div>
+
+      <!--Plus Sign-->
       <div class="label">+</div>
 
       <!--Static Mod-->
       <div class="input">
          <DocumentIntegerInput
-            bind:value={$document.system.attribute[key].mod.static}
+            bind:value={$document.system.attribute[attribute].mod.static}
          />
       </div>
+
+      <!--Equal Sign-->
       <div class="label">=</div>
 
       <!--Total Value-->
       <div class="value">
-         <StatModLabel
-            baseValue={$document.system.attribute[key].baseValue +
-               $document.system.attribute[key].mod.equipment +
-               $document.system.attribute[key].mod.ability}
-            currentValue={$document.system.attribute[key].value}
-            tooltip={totalValueTooltip}
+         <ModifiableStatValueLabel
+            abilityMod={$document.system.attribute[attribute].mod.ability}
+            baseValue={$document.system.attribute[attribute].baseValue}
+            effectMod={$document.system.attribute[attribute].mod.effect}
+            equipmentMod={$document.system.attribute[attribute].mod.equipment}
+            staticMod={$document.system.attribute[attribute].mod.static}
+            value={$document.system.attribute[attribute].value}
          />
       </div>
    </div>
@@ -116,8 +74,6 @@
 
       .button {
          min-width: 96px;
-
-         @include attribute-button;
       }
 
       .stats {

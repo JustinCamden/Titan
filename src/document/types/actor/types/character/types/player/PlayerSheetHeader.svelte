@@ -10,7 +10,7 @@
       from '~/document/types/actor/types/character/sheet/header/CharacterSheetResistances.svelte';
    import CharacterSheetInspiration
       from '~/document/types/actor/types/character/types/player/PlayerSheetInspiration.svelte';
-   import StatModLabel from '~/helpers/svelte-components/label/StatModLabel.svelte';
+   import ModifiedValueLabel from '~/helpers/svelte-components/label/ModifiedValueLabel.svelte';
 
    /** @type object Reference to the Document store. */
    const document = getContext('document');
@@ -36,7 +36,7 @@
             class="available"
             use:tooltipAction="{localize('xpAvailable')}"
          >
-            <StatModLabel
+            <ModifiedValueLabel
                baseValue={0}
                currentValue={$document.system.xp.available}
             />

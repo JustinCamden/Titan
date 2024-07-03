@@ -3,7 +3,7 @@
    import {getContext} from 'svelte';
    import tooltipAction from '~/helpers/svelte-actions/TooltipAction.js';
    import DocumentIntegerInput from '~/document/svelte-components/input/DocumentIntegerInput.svelte';
-   import StatModLabel from '~/helpers/svelte-components/label/StatModLabel.svelte';
+   import ModifiedValueLabel from '~/helpers/svelte-components/label/ModifiedValueLabel.svelte';
 
    export let key = void 0;
    export let icon = void 0;
@@ -84,7 +84,7 @@
 
       <!--Total Value-->
       <div class="value">
-         <StatModLabel
+         <ModifiedValueLabel
             baseValue={$document.system.rating[key].baseValue +
                $document.system.rating[key].mod.equipment +
                $document.system.rating[key].mod.ability}

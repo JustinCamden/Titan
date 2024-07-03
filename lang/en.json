@@ -476,6 +476,7 @@
       "staminaHealed.label": "Stamina Healed",
       "standardAspects.label": "Standard Aspects",
       "static.label": "Static",
+      "otherModifiers.label": "Other Modifiers",
       "stealth.desc.label": "<p><strong>Stealth</strong> allows you to remain undetected from other creatures.</p>",
       "stealth.label": "Stealth",
       "stride.desc.label": "<strong>Stride</strong> is your speed walking, running, or otherwise moving overland.",

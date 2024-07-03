@@ -9,9 +9,9 @@
 
 <!--Attributes-->
 <div class="attributes">
-   {#each Object.keys($document.system.attribute) as key}
+   {#each Object.keys($document.system.attribute) as attribute}
       <div class="attribute">
-         <CharacterSheetAttribute bind:key/>
+         <CharacterSheetAttribute {attribute}/>
       </div>
    {/each}
 </div>

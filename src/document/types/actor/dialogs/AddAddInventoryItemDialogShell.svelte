@@ -4,38 +4,31 @@
    import localize from '~/helpers/utility-functions/Localize.js';
    import getApplication from '~/helpers/utility-functions/GetApplication';
    import Button from '~/helpers/svelte-components/button/Button.svelte';
-   import Select from '~/helpers/svelte-components/select/Select.svelte';
+   import InventoryItemTypeSelect from '~/helpers/svelte-components/select/InventoryItemTypeSelect.svelte';
 
-   // Character Sheet
+   /** @type TitanActor Reference to the Actor this dialog is for. */
    export let actor = void 0;
 
    /** @type Application The Svelte Component's Application. */
    const application = getApplication();
 
-   const options = [
-      {
-         value: 'armor',
-         label: localize('armor'),
-      },
-      {
-         value: 'commodity',
-         label: localize('commodity'),
-      },
-      {
-         value: 'equipment',
-         label: localize('equipment'),
-      },
-      {
-         value: 'shield',
-         label: localize('shield'),
-      },
-      {
-         value: 'weapon',
-         label: localize('weapon'),
-      },
-   ];
-
+   /** @type string The currently selected item type. */
    let value = 'armor';
+
+   /**
+    * Called when the selection is confirmed.
+    */
+   function onConfirmed() {
+      actor.system.addItem(value);
+      application.close();
+   }
+
+   /**
+    * Called when the selection is canceled.
+    */
+   function onCanceled() {
+      application.close();
+   }
 </script>
 
 <div class="confirmation-dialog">
@@ -46,27 +39,20 @@
 
    <!--Type Select-->
    <div class="select">
-      <Select bind:value {options}/>
+      <InventoryItemTypeSelect bind:value/>
    </div>
 
-   <!--Buttons-->
+   <!--Confirmed button-->
    <div class="button">
-      <Button
-         on:click={() => {
-            actor.system.addItem(value);
-            application.close();
-         }}
-      >
+      <Button on:click={onConfirmed}>
          {localize('addNewItem')}
       </Button>
    </div>
 
+   <!--Canceled button-->
    <div class="button">
-      <Button
-         on:click={() => {
-            application.close();
-         }}
-      >{localize('cancel')}
+      <Button on:click={onCanceled}>
+         {localize('cancel')}
       </Button>
    </div>
 </div>

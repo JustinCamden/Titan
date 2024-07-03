@@ -22,6 +22,6 @@ export default function createFlatModifierElement(options) {
       selector: 'attribute',
       key: 'body',
       value: 1,
-      uuid: options.uuid ?? generateUUID(),
+      uuid: options?.uuid ?? generateUUID(),
    };
 }

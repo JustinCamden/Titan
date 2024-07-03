@@ -3,7 +3,7 @@
    import {getContext} from 'svelte';
    import tooltipAction from '~/helpers/svelte-actions/TooltipAction.js';
    import DocumentIntegerInput from '~/document/svelte-components/input/DocumentIntegerInput.svelte';
-   import StatModLabel from '~/helpers/svelte-components/label/StatModLabel.svelte';
+   import ModifiedValueLabel from '~/helpers/svelte-components/label/ModifiedValueLabel.svelte';
 
    // The key / name of the speed
    export let key;
@@ -89,7 +89,7 @@
 
       <!--Total Value-->
       <div class="value" use:tooltipAction="{totalValueTooltip}">
-         <StatModLabel
+         <ModifiedValueLabel
             baseValue={$document.system.speed[key].baseValue +
                $document.system.speed[key].mod.ability +
                $document.system.speed[key].mod.equipment}

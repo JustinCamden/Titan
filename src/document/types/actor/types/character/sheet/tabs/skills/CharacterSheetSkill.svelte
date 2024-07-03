@@ -7,7 +7,7 @@
    import {getContext} from 'svelte';
    import tooltipAction from '~/helpers/svelte-actions/TooltipAction.js';
    import localize from '~/helpers/utility-functions/Localize.js';
-   import StatModLabel from '~/helpers/svelte-components/label/StatModLabel.svelte';
+   import ModifiedValueLabel from '~/helpers/svelte-components/label/ModifiedValueLabel.svelte';
 
    /** @type string Key for the Skill to show stats for. */
    export let key;
@@ -116,7 +116,7 @@
             <!--Total Value-->
             <div class="symbol">=</div>
             <div class="value">
-               <StatModLabel
+               <ModifiedValueLabel
                   baseValue={
                      $document.system.skill[key].training.baseValue +
                      $document.system.skill[key].training.mod.ability +
@@ -159,7 +159,7 @@
             <!--Total Value-->
             <div class="symbol">=</div>
             <div class="value">
-               <StatModLabel
+               <ModifiedValueLabel
                   baseValue={
                      $document.system.skill[key].expertise.baseValue +
                      $document.system.skill[key].expertise.mod.ability +
