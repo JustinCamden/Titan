@@ -12,7 +12,7 @@ import localize from '~/helpers/utility-functions/Localize.js';
  * @param {string?} baseValueTooltip - Label for the base value of the stat in the tooltip.
  * @returns {string} Tooltip for the stat with a breakdown of any bonuses or penalties from item or effect modifiers.
  */
-export default function createStatModTooltip(
+export default function createModifiableStatTooltip(
    baseValue,
    value,
    abilityMod,
@@ -42,7 +42,7 @@ export default function createStatModTooltip(
 
    // Static mod
    if (staticMod) {
-      retVal += `<p>${localize('static')}: ${staticMod}</p>`;
+      retVal += `<p>${localize('temp')}: ${staticMod}</p>`;
    }
 
    // Extra mod

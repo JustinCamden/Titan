@@ -58,7 +58,7 @@
       return retVal;
    }
 
-   // Update calculated data in response to changes
+   // Update calculated data in response to changes.
    $: {
       // Update check parameters
       checkParameters = $document.system.getAttributeCheckParameters(

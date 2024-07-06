@@ -7,23 +7,22 @@
    const document = getContext('document');
 </script>
 
-<!--Attributes-->
-<div class="attributes">
+<div class="stat-list">
    {#each Object.keys($document.system.attribute) as attribute}
-      <div class="attribute">
+      <div class="stat">
          <CharacterSheetAttribute {attribute}/>
       </div>
    {/each}
 </div>
 
 <style lang="scss">
-   .attributes {
+   .stat-list {
       @include flex-column;
       @include flex-group-top;
 
       width: 100%;
 
-      .attribute {
+      .stat {
          @include flex-row;
          @include flex-group-center;
 

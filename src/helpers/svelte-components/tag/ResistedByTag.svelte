@@ -16,7 +16,7 @@
    </div>
 
    <!--Resistance-->
-   <div class="resistance">
+   <div class="stat">
       {localize(resistance)}
    </div>
 </ResistanceTag>

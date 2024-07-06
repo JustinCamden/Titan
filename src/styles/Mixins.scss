@@ -291,6 +291,8 @@
    &.willpower {
       background: var(--titan-willpower-background);
    }
+
+   --titan-button-background-disabled: var(--titan-button-background);
 }
 
 @mixin resistance-button {

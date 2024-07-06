@@ -60,3 +60,6 @@ export const UNCHECKED_ICON = 'fas fa-square';
 export const UNLINKED_ICON = 'fas fa-unlink';
 export const USER_ICON = 'fas fa-user-circle';
 export const WOUNDS_ICON = 'fas fa-face-head-bandage';
+export const RESILIENCE_ICON = 'fas fa-wave-pulse';
+export const REFLEXES_ICON = 'fas fa-rabbit-running';
+export const WILLPOWER_ICON = 'fas fa-solar-system';

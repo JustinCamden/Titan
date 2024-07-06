@@ -1,12 +1,16 @@
 <script>
    import localize from '~/helpers/utility-functions/Localize.js';
    import tooltipAction from '~/helpers/svelte-actions/TooltipAction.js';
+   import createModifiableStatTooltip from '~/helpers/utility-functions/CreateModifiableStatTooltip.js';
 
    /** @type number The base value of the stat before any modifiers are applied. */
    export let baseValue = void 0;
 
    /** @type number The value of the stat after any modifiers are applied. */
    export let value = void 0;
+
+   /** @type number Override for the value of the stat after any modifiers are applied. */
+   export let valueOverride = void 0;
 
    /** @type number Bonuses and penalties from Abilities. */
    export let abilityMod = void 0;
@@ -23,9 +27,6 @@
    /** @type string Label for the base value of the stat in the tooltip. */
    export let baseValueTooltip = void 0;
 
-   /** @type number Calculated sum bonuses and penalties from additional modifiers. */
-   let extraMod = 0;
-
    /** @type string Calculated tooltip for the stat. */
    let tooltip = `<p>${baseValueTooltip ?? localize('base')}: ${baseValue}</p>`;
 
@@ -34,68 +35,40 @@
 
    $: {
       // Calculate the normal value by adding the ability and equipment mods to the base value.
-      let normalBaseValue = baseValue;
+      let normalValue = baseValue;
       if (abilityMod) {
-         normalBaseValue += abilityMod;
+         normalValue += abilityMod;
       }
       if (equipmentMod) {
-         normalBaseValue += equipmentMod;
+         normalValue += equipmentMod;
       }
 
-      // Calculate the extra mod by checking the difference between the normal total value and actual value.
-      extraMod = 0;
-      let normalValue = normalBaseValue;
-      if (effectMod) {
-         normalValue += effectMod;
-      }
-      if (staticMod) {
-         normalValue += staticMod;
-      }
-      if (normalValue !== value) {
-         extraMod = value - normalValue;
-         normalBaseValue += extraMod;
-      }
+      let realValue = valueOverride ?? value;
 
       // Update the style class in response to changes.
       styleClass = 'label';
 
       // Add a bonus class if normal value < current value.
-      if (normalBaseValue < value) {
+      if (normalValue < realValue) {
          styleClass += ' bonus';
       }
 
       // Add a penalty class if normal value > current value.
-      else if (normalBaseValue > value) {
+      else if (normalValue > realValue) {
          styleClass += ' penalty';
       }
 
       // Update the tooltip in response to changes.
-      tooltip = `<p>${baseValueTooltip ?? localize('base')}: ${baseValue}</p>`;
-
-      // Add Ability mod tooltip.
-      if (abilityMod) {
-         tooltip += `<p>${localize('abilities')}: ${abilityMod}</p>`;
-      }
-
-      // Add Effect mod tooltip.
-      if (effectMod) {
-         tooltip += `<p>${localize('effects')}: ${effectMod}</p>`;
-      }
-
-      // Add Equipment mod tooltip.
-      if (equipmentMod) {
-         tooltip += `<p>${localize('equipment')}: ${equipmentMod}</p>`;
-      }
-
-      // Add Static mod tooltip.
-      if (staticMod) {
-         tooltip += `<p>${localize('static')}: ${staticMod}</p>`;
-      }
-
-      // Add Extra mod tooltip.
-      if (extraMod) {
-         tooltip += `<p>${localize('otherModifiers')}: ${extraMod}</p>`;
-      }
+      tooltip = createModifiableStatTooltip(
+         baseValue,
+         value,
+         abilityMod,
+         effectMod,
+         equipmentMod,
+         staticMod,
+         valueOverride ? valueOverride - value : 0,
+         baseValueTooltip
+      );
    }
 </script>
 

@@ -9,6 +9,7 @@
  * @property {number} diceMod Modifier for the number of Dice being rolled.
  * @property {number} difficulty The minimum roll on a die to achieve a Success.
  * @property {number} expertiseMod Modifier for the amount of Expertise to be applied.
+ * @property {number} resistanceDice The number of dice granted by the Resistance.
  * @property {number} totalDice The total number of dice to be rolled.
  * @property {number} totalExpertise The total amount of expertise to apply.
  * @property {string} resistance The Resistance to roll for the Check.

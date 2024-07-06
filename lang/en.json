@@ -496,6 +496,7 @@
       "swim.value.label": "Total Swim Speed",
       "target.label": "Target",
       "targetDefense.label": "Target Defense",
+      "temp.label": "Temp",
       "titan": "Titan",
       "toggleEffectActive.label": "Toggle Effect Active",
       "toggleItemSheet.label": "Toggle Item Sheet",

@@ -64,7 +64,7 @@ export default class TitanDocumentSheet extends SvelteApplication {
          width: 700,
          height: 'auto',
          baseApplication: 'DocumentSheet',
-         resizable: true,
+         resizable: false,
          minimizable: true,
          dragDrop: [{dragSelector: '.directory-list .item', dropSelector: null}],
          svelte: {

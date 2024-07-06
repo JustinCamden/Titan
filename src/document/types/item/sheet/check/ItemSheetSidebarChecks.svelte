@@ -115,7 +115,7 @@
                      </div>
 
                      <!--Value-->
-                     <div class="value attribute">
+                     <div class="value stat">
                         <AttributeCheckTag
                            attribute={check.opposedCheck.attribute}
                            skill={check.opposedCheck.skill}

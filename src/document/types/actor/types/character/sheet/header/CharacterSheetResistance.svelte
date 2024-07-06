@@ -3,11 +3,12 @@
    import {getContext} from 'svelte';
    import tooltipAction from '~/helpers/svelte-actions/TooltipAction.js';
    import DocumentIntegerInput from '~/document/svelte-components/input/DocumentIntegerInput.svelte';
-   import Button from '~/helpers/svelte-components/button/Button.svelte';
    import ModifiedValueLabel from '~/helpers/svelte-components/label/ModifiedValueLabel.svelte';
+   import CharacterSheetResistanceCheckButton
+      from '~/document/types/actor/types/character/sheet/header/CharacterSheetResistanceCheckButton.svelte';
 
    // The key / name of the resistance
-   export let key;
+   export let resistance;
 
    /** @type object Reference to the Document store. */
    const document = getContext('document');
@@ -28,7 +29,7 @@
       staticMod,
    ) {
       // Base label
-      let retVal = `<p>${localize(`${key}.baseValue`)}</p><p>${localize(
+      let retVal = `<p>${localize(`${resistance}.baseValue`)}</p><p>${localize(
          'base',
       )}: ${baseValue}</p>`;
 
@@ -56,39 +57,32 @@
    }
 
    $: totalValueTooltip = getTotalValueTooltip(
-      $document.system.resistance[key].baseValue,
-      $document.system.resistance[key].mod.equipment,
-      $document.system.resistance[key].mod.effect,
-      $document.system.resistance[key].mod.ability,
-      $document.system.resistance[key].mod.static,
+      $document.system.resistance[resistance].baseValue,
+      $document.system.resistance[resistance].mod.equipment,
+      $document.system.resistance[resistance].mod.effect,
+      $document.system.resistance[resistance].mod.ability,
+      $document.system.resistance[resistance].mod.static,
    );
 </script>
 
-<div class="resistance" data-resistance={key}>
+<div class="stat" data-resistance={resistance}>
    <!--Resistance Label-->
-   <div class="button {key}" use:tooltipAction="{localize(`${key}.desc`)}">
-      <Button
-         on:click={() =>
-            $document.system.requestResistanceCheck(
-               { resistance: key },
-            )}
-      >
-         {localize(key)}
-      </Button>
+   <div class="button {resistance}" use:tooltipAction="{localize(`${resistance}.desc`)}">
+      <CharacterSheetResistanceCheckButton {resistance}></CharacterSheetResistanceCheckButton>
    </div>
 
    <!--Stats-->
    <div class="stats">
       <!--Base Value-->
       <div class="base-value">
-         {$document.system.resistance[key].baseValue}
+         {$document.system.resistance[resistance].baseValue}
       </div>
       <div class="label">+</div>
 
       <!--Static Mod-->
       <div class="input">
          <DocumentIntegerInput
-            bind:value={$document.system.resistance[key].mod.static}
+            bind:value={$document.system.resistance[resistance].mod.static}
          />
       </div>
       <div class="label">=</div>
@@ -96,17 +90,17 @@
       <!--Total Value-->
       <div class="value" use:tooltipAction="{totalValueTooltip}">
          <ModifiedValueLabel
-            baseValue={$document.system.resistance[key].baseValue +
-               $document.system.resistance[key].mod.equipment +
-               $document.system.resistance[key].mod.ability}
-            currentValue={$document.system.resistance[key].value}
+            baseValue={$document.system.resistance[resistance].baseValue +
+               $document.system.resistance[resistance].mod.equipment +
+               $document.system.resistance[resistance].mod.ability}
+            currentValue={$document.system.resistance[resistance].value}
          />
       </div>
    </div>
 </div>
 
 <style lang="scss">
-   .resistance {
+   .stat {
       @include flex-row;
       @include flex-space-evenly;
 
@@ -114,9 +108,7 @@
       width: 100%;
 
       .button {
-         @include resistance-button;
-
-         min-width: 96px;
+         width: 100%;
       }
 
       .stats {

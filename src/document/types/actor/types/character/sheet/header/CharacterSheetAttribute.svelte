@@ -1,30 +1,21 @@
 <script>
-   import localize from '~/helpers/utility-functions/Localize.js';
    import {getContext} from 'svelte';
    import DocumentIntegerInput from '~/document/svelte-components/input/DocumentIntegerInput.svelte';
-   import DocumentOwnerAttributeButton from '~/document/svelte-components/DocumentOwnerAttributeButton.svelte';
    import ModifiableStatValueLabel from '~/helpers/svelte-components/label/ModifiableStatValueLabel.svelte';
+   import CharacterSheetCondensedAttributeCheckButton
+      from '~/document/types/actor/types/character/sheet/header/CharacterSheetAttributeCheckButton.svelte';
 
    /** @type string The Attribute that this component represents. */
    export let attribute;
 
    /** @type object Reference to the Document store. */
    const document = getContext('document');
-
-   /**
-    * Rolls the Attribute from the character.
-    */
-   function onRoll() {
-      $document.system.requestAttributeCheck({attribute: attribute});
-   }
 </script>
 
-<div class="attribute" data-attribute={attribute}>
+<div class="stat">
    <!--Label Button-->
    <div class="button">
-      <DocumentOwnerAttributeButton {attribute} on:click={onRoll} tooltip={localize(`${attribute}.desc`)}>
-         {localize(attribute)}
-      </DocumentOwnerAttributeButton>
+      <CharacterSheetCondensedAttributeCheckButton {attribute}/>
    </div>
 
    <!--Stats-->
@@ -38,7 +29,7 @@
       </div>
 
       <!--Plus Sign-->
-      <div class="label">+</div>
+      <div class="sign">+</div>
 
       <!--Static Mod-->
       <div class="input">
@@ -48,7 +39,7 @@
       </div>
 
       <!--Equal Sign-->
-      <div class="label">=</div>
+      <div class="sign">=</div>
 
       <!--Total Value-->
       <div class="value">
@@ -65,15 +56,14 @@
 </div>
 
 <style lang="scss">
-   .attribute {
+   .stat {
       @include flex-row;
       @include flex-space-evenly;
 
-      height: 100%;
       width: 100%;
 
       .button {
-         min-width: 96px;
+         width: 100%;
       }
 
       .stats {
@@ -95,7 +85,7 @@
             width: 28px;
          }
 
-         .label {
+         .sign {
             @include flex-row;
             @include flex-group-center;
 

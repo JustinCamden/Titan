@@ -1,7 +1,7 @@
 <script>
-   import Button from '~/helpers/svelte-components/button/Button.svelte';
    import {DICE_ICON, EXPERTISE_ICON, SPEND_RESOLVE_ICON} from '~/system/Icons.js';
    import {getContext} from 'svelte';
+   import DocumentOwnerAttributeButton from '~/document/svelte-components/DocumentOwnerAttributeButton.svelte';
 
    /** @type object Reference to the Document store. */
    const document = getContext('document');
@@ -35,8 +35,8 @@
 </script>
 
 <div class="check-button {attribute}">
-   <Button
-      disabled={!$document.isOwner}
+   <DocumentOwnerAttributeButton
+      {attribute}
       on:click
       tooltip={tooltip}
    >
@@ -67,10 +67,12 @@
          {/if}
 
          <!--Total Dice-->
-         <div class="stat">
-            <i class="{DICE_ICON}"/>
-            {totalDice}
-         </div>
+         {#if totalDice}
+            <div class="stat">
+               <i class="{DICE_ICON}"/>
+               {totalDice}
+            </div>
+         {/if}
 
          <!--Total Expertise-->
          {#if totalExpertise}
@@ -88,13 +90,12 @@
             </div>
          {/if}
       </div>
-   </Button>
+   </DocumentOwnerAttributeButton>
 </div>
 
 <style lang="scss">
    .check-button {
       @include flex-row;
-      @include attribute-button;
 
       .button-inner {
          @include flex-row;
