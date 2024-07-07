@@ -3,7 +3,7 @@
    import CharacterSheetRating from '~/document/types/actor/types/character/sheet/sidebar/CharacterSheetRating.svelte';
    import CharacterSheetRatingButton
       from '~/document/types/actor/types/character/sheet/sidebar/CharacterSheetRatingButton.svelte';
-   import {ACCURACY_ICON, AWARENESS_ICON, DEFENSE_ICON, INITIATIVE_ICON, MELEE_ICON} from '~/system/Icons.js';
+   import {INITIATIVE_ICON} from '~/system/Icons.js';
 
    /** @type object Reference to the Document store. */
    const document = getContext('document');
@@ -23,22 +23,22 @@
 
    <!--Awareness-->
    <div class="rating">
-      <CharacterSheetRating icon={AWARENESS_ICON} key={'awareness'}/>
+      <CharacterSheetRating rating={'awareness'}/>
    </div>
 
    <!--Defense-->
    <div class="rating">
-      <CharacterSheetRating icon={DEFENSE_ICON} key={'defense'}/>
+      <CharacterSheetRating rating={'defense'}/>
    </div>
 
    <!--Melee-->
    <div class="rating">
-      <CharacterSheetRating icon={MELEE_ICON} key={'melee'}/>
+      <CharacterSheetRating rating={'melee'}/>
    </div>
 
    <!--Accuracy-->
    <div class="rating">
-      <CharacterSheetRating icon={ACCURACY_ICON} key={'accuracy'}/>
+      <CharacterSheetRating rating={'accuracy'}/>
    </div>
 </div>
 

@@ -16,7 +16,7 @@
 <div class="field" use:tooltipAction="{fieldTooltip}">
 
    <!--Label-->
-   <div class="label">
+   <div class="sign">
       {label}
    </div>
 
@@ -36,7 +36,7 @@
       padding: var(--titan-padding-standard);
       width: 100%;
 
-      .label {
+      .sign {
          @include flex-group-right;
          @include border-right;
 

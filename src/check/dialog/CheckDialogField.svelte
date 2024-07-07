@@ -21,7 +21,7 @@
 <div class="field" on:change use:tooltipAction="{fieldTooltip}">
 
    <!--Label-->
-   <div class="label">
+   <div class="sign">
       {label}
    </div>
 
@@ -39,7 +39,7 @@
       width: 100%;
       height: 100%;
 
-      .label {
+      .sign {
          @include flex-group-right;
 
          width: 100%;

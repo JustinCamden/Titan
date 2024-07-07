@@ -1,3 +1,5 @@
+import {deepFreeze} from '@typhonjs-fvtt/runtime/util/object';
+
 export const ACCURACY_ICON = 'fas fa-bow-arrow';
 export const ARMOR_ICON = 'fas fa-helmet-battle';
 export const AWARENESS_ICON = 'fas fa-eye';
@@ -63,3 +65,84 @@ export const WOUNDS_ICON = 'fas fa-face-head-bandage';
 export const RESILIENCE_ICON = 'fas fa-wave-pulse';
 export const REFLEXES_ICON = 'fas fa-rabbit-running';
 export const WILLPOWER_ICON = 'fas fa-solar-system';
+
+/**
+ * Mapping of concepts to their particular icon.
+ * @type object
+ */
+const ICON_MAP = deepFreeze({
+   accuracy: ACCURACY_ICON,
+   armor: ARMOR_ICON,
+   awareness: AWARENESS_ICON,
+   body: BODY_ICON,
+   checked: CHECKED_ICON,
+   cleave: CLEAVE_ICON,
+   collapsed: COLLAPSED_ICON,
+   create: CREATE_ICON,
+   currency: CURRENCY_ICON,
+   custom: CUSTOM_ICON,
+   damage: DAMAGE_ICON,
+   decreaseSpeed: DECREASE_SPEED_ICON,
+   decrement: DECREMENT_ICON,
+   defense: DEFENSE_ICON,
+   delete: DELETE_ICON,
+   dice: DICE_ICON,
+   duration: DURATION_ICON,
+   edit: EDIT_ICON,
+   expanded: EXPANDED_ICON,
+   expertise: EXPERTISE_ICON,
+   expired: EXPIRED_ICON,
+   fastHealing: FAST_HEALING_ICON,
+   halfDamage: HALF_DAMAGE_ICON,
+   healing: HEALING_ICON,
+   id: ID_ICON,
+   ignoreArmor: IGNORE_ARMOR_ICON,
+   import: IMPORT_ICON,
+   increaseSpeed: INCREASE_SPEED_ICON,
+   increment: INCREMENT_ICON,
+   initiative: INITIATIVE_ICON,
+   inspiration: INSPIRATION_ICON,
+   linked: LINKED_ICON,
+   longRest: LONG_REST_ICON,
+   melee: MELEE_ICON,
+   mind: MIND_ICON,
+   mod: MOD_ICON,
+   multiAttack: MULTI_ATTACK_ICON,
+   noMultiAttack: NO_MULTI_ATTCK_ICON,
+   overkill: OVERKILL_ICON,
+   permanent: PERMANENT_ICON,
+   persistentDamage: PERSISTENT_DAMAGE_ICON,
+   radius: RADIUS_ICON,
+   range: RANGE_ICON,
+   regainResolve: REGAIN_RESOLVE_ICON,
+   removeTempEffects: REMOVE_TEMP_EFFECTS_ICON,
+   rend: REND_ICON,
+   repair: REPAIR_ICON,
+   reset: RESET_ICON,
+   resolve: RESOLVE_ICON,
+   sendToChat: SEND_TO_CHAT_ICON,
+   settings: SETTINGS_ICON,
+   shortRest: SHORT_REST_ICON,
+   soul: SOUL_ICON,
+   spendResolve: SPEND_RESOLVE_ICON,
+   stamina: STAMINA_ICON,
+   training: TRAINING_ICON,
+   turnEnd: TURN_END_ICON,
+   turnStart: TURN_START_ICON,
+   unchecked: UNCHECKED_ICON,
+   unlinked: UNLINKED_ICON,
+   user: USER_ICON,
+   wounds: WOUNDS_ICON,
+   resilience: RESILIENCE_ICON,
+   reflexes: REFLEXES_ICON,
+   willpower: WILLPOWER_ICON,
+});
+
+/**
+ * Gets the Icon for a concept from the concept map.
+ * @param {string} concept - The concept to get the icon for.
+ * @returns {string} The icon class for the provided constant.
+ */
+export function getIcon(concept) {
+   return ICON_MAP[concept];
+}

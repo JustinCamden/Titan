@@ -3,100 +3,60 @@
    import {getContext} from 'svelte';
    import tooltipAction from '~/helpers/svelte-actions/TooltipAction.js';
    import DocumentIntegerInput from '~/document/svelte-components/input/DocumentIntegerInput.svelte';
-   import ModifiedValueLabel from '~/helpers/svelte-components/label/ModifiedValueLabel.svelte';
+   import ModifiableStatValueLabel from '~/helpers/svelte-components/label/ModifiableStatValueLabel.svelte';
+   import {getIcon} from '~/system/Icons.js';
 
-   export let key = void 0;
-   export let icon = void 0;
+   /** @type string The Rating that this component represents. */
+   export let rating = void 0;
+
+   /** @type string The Icon that represents this stat. */
+   const icon = getIcon(rating);
 
    /** @type object Reference to the Document store. */
    const document = getContext('document');
 
-   // Calculate the tooltipAction for the max value
-   /**
-    * @param baseValue
-    * @param equipment
-    * @param effect
-    * @param ability
-    * @param staticMod
-    */
-   function getTotalValueTooltip(
-      baseValue,
-      equipment,
-      effect,
-      ability,
-      staticMod,
-   ) {
-      // Base label
-      let retVal = `<p>${localize(`${key}.baseValue`)}</p><p>${localize(
-         'base',
-      )}: ${baseValue}</p>`;
-
-      // Equipment
-      if (equipment !== 0) {
-         retVal += `<p>${localize('equipment')}: ${equipment}</p>`;
-      }
-
-      // Abilities
-      if (ability !== 0) {
-         retVal += `<p>${localize('abilities')}: ${ability}</p>`;
-      }
-
-      // Effects
-      if (effect !== 0) {
-         retVal += `<p>${localize('effects')}: ${effect}</p>`;
-      }
-
-      // Static mod
-      if (staticMod !== 0) {
-         retVal += `<p>${localize('mod')}: ${staticMod}</p>`;
-      }
-
-      return retVal;
-   }
-
-   $: totalValueTooltip = getTotalValueTooltip(
-      $document.system.rating[key].baseValue,
-      $document.system.rating[key].mod.equipment,
-      $document.system.rating[key].mod.effect,
-      $document.system.rating[key].mod.ability,
-      $document.system.rating[key].mod.static,
-   );
 </script>
 
-<div class="mod">
+<div class="stat">
    <!--Label-->
-   <div class="label" use:tooltipAction="{localize(`${key}.desc`)}">
+   <div class="sign" use:tooltipAction="{localize(`${rating}.desc`)}">
       <!--Icon-->
       <i class="{icon}"/>
-      {localize(key)}
+      {localize(rating)}
    </div>
 
    <!--Stats-->
    <div class="stats">
+      <!--Plus Sign-->
+      <div class="sign">+</div>
+
       <!--Static Mod-->
-      <div class="label">+</div>
       <div class="input">
          <DocumentIntegerInput
-            bind:value={$document.system.rating[key].mod.static}
+            bind:value={$document.system.rating[rating].mod.static}
          />
       </div>
-      <div class="label">=</div>
+
+      <!--Equal Sign-->
+      <div class="sign">=</div>
 
       <!--Total Value-->
       <div class="value">
-         <ModifiedValueLabel
-            baseValue={$document.system.rating[key].baseValue +
-               $document.system.rating[key].mod.equipment +
-               $document.system.rating[key].mod.ability}
-            currentValue={$document.system.rating[key].value}
-            tooltip={totalValueTooltip}
+         <ModifiableStatValueLabel
+            abilityMod={$document.system.rating[rating].mod.ability}
+            baseValue={$document.system.rating[rating].baseValue}
+            baseValueTooltip={localize(`${rating}.baseValue`)}
+            effectMod={$document.system.rating[rating].mod.effect}
+            equipmentMod={$document.system.rating[rating].mod.equipment}
+            staticMod={$document.system.rating[rating].mod.static}
+            value={$document.system.rating[rating].value}
          />
       </div>
    </div>
 </div>
 
 <style lang="scss">
-   .mod {
+   .stat {
       @include flex-row;
       @include flex-space-between;
 
@@ -107,7 +67,7 @@
          width: 20px;
       }
 
-      .label {
+      .sign {
          @include flex-row;
          @include flex-group-center;
 

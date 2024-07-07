@@ -78,7 +78,7 @@
       >
          <!--Icon-->
          <i class="{icon}"/>
-         <div class="label">
+         <div class="sign">
             {localize(key)}
          </div>
       </Button>
@@ -87,13 +87,13 @@
    <!--Stats-->
    <div class="stats">
       <!--Static Mod-->
-      <div class="label">+</div>
+      <div class="sign">+</div>
       <div class="input">
          <DocumentIntegerInput
             bind:value={$document.system.rating[key].mod.static}
          />
       </div>
-      <div class="label">=</div>
+      <div class="sign">=</div>
 
       <!--Total Value-->
       <div class="value">
@@ -134,7 +134,7 @@
             margin-right: var(--titan-padding-standard);
          }
 
-         .label {
+         .sign {
             margin-right: var(--titan-padding-large);
          }
       }

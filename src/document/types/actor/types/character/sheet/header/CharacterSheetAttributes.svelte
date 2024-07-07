@@ -7,7 +7,10 @@
    const document = getContext('document');
 </script>
 
+<!-- Resistances-->
 <div class="stat-list">
+
+   <!-- Each Resistance-->
    {#each Object.keys($document.system.attribute) as attribute}
       <div class="stat">
          <CharacterSheetAttribute {attribute}/>

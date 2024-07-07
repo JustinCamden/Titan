@@ -23,7 +23,10 @@ export default function createModifiableStatTooltip(
    baseValueTooltip
 ) {
    // Base label
-   let retVal = `<p>${baseValueTooltip ?? localize('base')}: ${baseValue}</p>`;
+   let retVal = baseValueTooltip ? `<p>${baseValueTooltip}</p>` : '';
+
+   // Base Value
+   retVal += `<p>${localize('base')}: ${baseValue}</p>`;
 
    // Abilities
    if (abilityMod) {
