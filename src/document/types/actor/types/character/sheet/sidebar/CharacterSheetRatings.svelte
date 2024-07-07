@@ -9,9 +9,11 @@
    const document = getContext('document');
 </script>
 
-<div class="ratings">
+<!--Ratings-->
+<div class="stat-list">
+
    <!--Initiative-->
-   <div class="rating">
+   <div class="stat">
       <CharacterSheetRatingButton
          icon={INITIATIVE_ICON}
          key={'initiative'}
@@ -22,35 +24,35 @@
    </div>
 
    <!--Awareness-->
-   <div class="rating">
+   <div class="stat">
       <CharacterSheetRating rating={'awareness'}/>
    </div>
 
    <!--Defense-->
-   <div class="rating">
+   <div class="stat">
       <CharacterSheetRating rating={'defense'}/>
    </div>
 
    <!--Melee-->
-   <div class="rating">
+   <div class="stat">
       <CharacterSheetRating rating={'melee'}/>
    </div>
 
    <!--Accuracy-->
-   <div class="rating">
+   <div class="stat">
       <CharacterSheetRating rating={'accuracy'}/>
    </div>
 </div>
 
 <style lang="scss">
-   .ratings {
+   .stat-list {
       @include flex-column;
       @include flex-group-top;
 
       width: 100%;
       height: 100%;
 
-      .rating {
+      .stat {
          @include flex-row;
          @include flex-group-center;
 
