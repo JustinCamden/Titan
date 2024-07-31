@@ -39,7 +39,7 @@
       "applyOverkillDamage.label": "Apply Overkill Damage",
       "arcana.desc.label": "<p><strong>Arcana</strong> measures how much you know about arcane magic and creatures.</p>",
       "arcana.label": "Arcana",
-      "armor.base.label": "Equipped Armor",
+      "armor.base.label": "Your <strong>Armor</strong> is determined by what gear, effects, and abilities you possess.",
       "armor.desc.label": "<p><strong>Armor</strong> decreases the amount of <strong>Damage</strong> taken when you are hit by attacks and spells.</p><p>Your <strong>Armor</strong> is determined by what gear, effects, and abilities you possess.</p>",
       "armor.encumbering.desc.label": "When wearing armor with the <strong>Encumbering</strong> trait, you have <strong>Disadvantage</strong> on checks to <strong>Swim</strong>, <strong>Fly</strong>, or <strong>Climb</strong>.",
       "armor.heavy.desc.label": "While wearing <strong>Heavy</strong> armor, all your speeds are decreased by <strong>-1</strong>, and you have <strong>Greater Disadvantage</strong> on checks to <strong>Swim</strong>, <strong>Fly</strong>, or <strong>Climb</strong>. You cannot <strong>Jump</strong> while wearing <strong>Heavy</strong> armor.",

@@ -14,7 +14,7 @@
    const document = getContext('document');
 </script>
 
-<div class="stat" data-resistance={resistance}>
+<div class="container" data-resistance={resistance}>
    <!--Resistance Label-->
    <div class="button {resistance}" use:tooltipAction="{localize(`${resistance}.desc`)}">
       <CharacterSheetResistanceCheckButton {resistance}/>
@@ -45,8 +45,8 @@
       <div class="value">
          <ModifiableStatValueLabel
             abilityMod={$document.system.resistance[resistance].mod.ability}
+            baseTooltip={localize(`${resistance}.baseValue`)}
             baseValue={$document.system.resistance[resistance].baseValue}
-            baseValueTooltip={localize(`${resistance}.baseValue`)}
             effectMod={$document.system.resistance[resistance].mod.effect}
             equipmentMod={$document.system.resistance[resistance].mod.equipment}
             staticMod={$document.system.resistance[resistance].mod.static}
@@ -57,7 +57,7 @@
 </div>
 
 <style lang="scss">
-   .stat {
+   .container {
       @include flex-row;
       @include flex-space-evenly;
 

@@ -1285,7 +1285,7 @@ export default class CharacterDataModel extends ActorDataModel {
       // Apply armor bonus
       const armor = this.getEquippedArmor();
       if (armor) {
-         this.mod.armor.equipment += armor.system.armor.value;
+         this.mod.armor.mod.equipment += armor.system.armor.value;
 
          // Add encumbrance if appropriate
          const armorTraits = armor.system.trait;

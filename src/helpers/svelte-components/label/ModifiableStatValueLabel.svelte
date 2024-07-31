@@ -25,10 +25,10 @@
    export let staticMod = void 0;
 
    /** @type string Label for the base value of the stat in the tooltip. */
-   export let baseValueTooltip = void 0;
+   export let baseTooltip = void 0;
 
    /** @type string Calculated tooltip for the stat. */
-   let tooltip = `<p>${baseValueTooltip ?? localize('base')}: ${baseValue}</p>`;
+   let tooltip = `<p>${baseTooltip ?? localize('base')}: ${baseValue}</p>`;
 
    /** @type string Calculated class to use for styling the label. */
    let styleClass = 'label';
@@ -67,7 +67,7 @@
          equipmentMod,
          staticMod,
          valueOverride ? valueOverride - value : 0,
-         baseValueTooltip
+         baseTooltip
       );
    }
 </script>

@@ -3,88 +3,59 @@
    import {getContext} from 'svelte';
    import tooltipAction from '~/helpers/svelte-actions/TooltipAction.js';
    import DocumentIntegerInput from '~/document/svelte-components/input/DocumentIntegerInput.svelte';
-   import ModifiedValueLabel from '~/helpers/svelte-components/label/ModifiedValueLabel.svelte';
+   import {getIcon} from '~/system/Icons.js';
+   import ModifiableStatValueLabel from '~/helpers/svelte-components/label/ModifiableStatValueLabel.svelte';
 
-   export let key = void 0;
-   export let icon = void 0;
+   /** @type string The Mod that this component represents. */
+   export let mod = void 0;
+
+   /** @type string The Icon that represents this stat. */
+   const icon = getIcon(mod);
 
    /** @type object Reference to the Document store. */
    const document = getContext('document');
-
-   // Calculate the tooltipAction for the max value
-   /**
-    * @param equipment
-    * @param effect
-    * @param ability
-    * @param staticMod
-    */
-   function getTotalValueTooltip(equipment, effect, ability, staticMod) {
-      // Base label
-      let retVal = '';
-
-      // Equipment
-      if (equipment !== 0) {
-         retVal += `<p>${localize('equipment')}: ${equipment}</p>`;
-      }
-
-      // Abilities
-      if (ability !== 0) {
-         retVal += `<p>${localize('abilities')}: ${ability}</p>`;
-      }
-
-      // Effects
-      if (effect !== 0) {
-         retVal += `<p>${localize('effects')}: ${effect}</p>`;
-      }
-
-      // Static mod
-      if (staticMod !== 0) {
-         retVal += `<p>${localize('mod')}: ${staticMod}</p>`;
-      }
-
-      return retVal;
-   }
-
-   $: totalValueTooltip = getTotalValueTooltip(
-      $document.system.mod[key].mod.equipment,
-      $document.system.mod[key].mod.effect,
-      $document.system.mod[key].mod.ability,
-      $document.system.mod[key].mod.static,
-   );
 </script>
 
-<div class="mod">
+<div class="container">
    <!--Label-->
-   <div class="label" use:tooltipAction="{localize(`${key}.desc`)}">
+   <div class="label" use:tooltipAction="{localize(`${mod}.desc`)}">
       <!--Icon-->
       <i class="{icon}"/>
-      {localize(key)}
+      {localize(mod)}
    </div>
 
    <!--Stats-->
    <div class="stats">
-      <!--Static Mod-->
+
+      <!--Plus Sign-->
       <div class="label">+</div>
+
+      <!--Static Mod-->
       <div class="input">
          <DocumentIntegerInput
-            bind:value={$document.system.mod[key].mod.static}
+            bind:value={$document.system.mod[mod].mod.static}
          />
       </div>
+
+      <!--Equal Sign-->
       <div class="label">=</div>
 
       <!--Total Value-->
-      <div class="value" use:tooltipAction="{totalValueTooltip}">
-         <ModifiedValueLabel
-            baseValue={$document.system.mod[key].mod.equipment +
-               $document.system.mod[key].mod.ability}
-            currentValue={$document.system.mod[key].value}
+      <div class="value">
+         <ModifiableStatValueLabel
+            baseTooltip={localize(`${mod}.base`)}
+            baseValue={0}
+            effectMod={$document.system.mod[mod].mod.effect}
+            equipmentMod={$document.system.mod[mod].mod.equipment}
+            staticMod={$document.system.mod[mod].mod.static}
+            value={$document.system.mod[mod].value}
          />
       </div>
    </div>
 </div>
 
 <style lang="scss">
-   .mod {
+   .container {
       @include flex-row;
       @include flex-space-between;
 

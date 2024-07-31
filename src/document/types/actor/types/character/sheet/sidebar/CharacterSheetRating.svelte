@@ -1,32 +1,52 @@
 <script>
    import localize from '~/helpers/utility-functions/Localize.js';
    import {getContext} from 'svelte';
-   import tooltipAction from '~/helpers/svelte-actions/TooltipAction.js';
    import DocumentIntegerInput from '~/document/svelte-components/input/DocumentIntegerInput.svelte';
    import ModifiableStatValueLabel from '~/helpers/svelte-components/label/ModifiableStatValueLabel.svelte';
    import {getIcon} from '~/system/Icons.js';
+   import DocumentOwnerButton from '~/document/svelte-components/DocumentOwnerButton.svelte';
+   import tooltipAction from '~/helpers/svelte-actions/TooltipAction.js';
 
    /** @type string The Rating that this component represents. */
    export let rating = void 0;
+
+   /** @type Function Callback for when the rating button is clicked. */
+   export let onClick = void 0;
 
    /** @type string The Icon that represents this stat. */
    const icon = getIcon(rating);
 
    /** @type object Reference to the Document store. */
    const document = getContext('document');
-
 </script>
 
-<div class="stat">
-   <!--Label-->
-   <div class="sign" use:tooltipAction="{localize(`${rating}.desc`)}">
-      <!--Icon-->
-      <i class="{icon}"/>
-      {localize(rating)}
-   </div>
+<div class="container">
+
+   {#if typeof onClick == "function"}
+      <!--Display a button if onClick is a function.-->
+      <div class="button">
+         <DocumentOwnerButton on:click={onClick} tooltip={localize(`${rating}.desc`)}>
+            <!--Icon-->
+            <i class="{icon}"/>
+            <div class="sign">
+               {localize(rating)}
+            </div>
+         </DocumentOwnerButton>
+      </div>
+
+   {:else}
+      <!--Otherwise, display a label.-->
+      <div class="label" use:tooltipAction="{localize(`${rating}.desc`)}">
+         <!--Icon-->
+         <i class="{icon}"/>
+
+         {localize(rating)}
+      </div>
+   {/if}
 
    <!--Stats-->
    <div class="stats">
+
       <!--Plus Sign-->
       <div class="sign">+</div>
 
@@ -44,8 +64,8 @@
       <div class="value">
          <ModifiableStatValueLabel
             abilityMod={$document.system.rating[rating].mod.ability}
+            baseTooltip={localize(`${rating}.baseValue`)}
             baseValue={$document.system.rating[rating].baseValue}
-            baseValueTooltip={localize(`${rating}.baseValue`)}
             effectMod={$document.system.rating[rating].mod.effect}
             equipmentMod={$document.system.rating[rating].mod.equipment}
             staticMod={$document.system.rating[rating].mod.static}
@@ -56,7 +76,7 @@
 </div>
 
 <style lang="scss">
-   .stat {
+   .container {
       @include flex-row;
       @include flex-space-between;
 
