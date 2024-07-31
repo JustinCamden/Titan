@@ -6,7 +6,7 @@
    export let min = 0;
 
    /** @type number The current value of the meter. */
-   export let current = void 0;
+   export let value = void 0;
 
    /** @type number The speed at which the meter should animate, in percent per second. */
    export let meterScaleSpeed = 10;
@@ -15,7 +15,7 @@
    export let updateInterval = 10;
 
    /** @type number The calculated percent of the meter. */
-   let meterPercentWidth = (current / max - min) * 100;
+   let meterPercentWidth = (value / max - min) * 100;
 
    /** @type {number|null} Handle ID of the meter update function that fires on interval. */
    let updateHandle = null;
@@ -47,7 +47,7 @@
    // Update the meter in reponse to changes.
    $: {
       // Update the target percent width
-      targetMeterPercentWidth = (current / max - min) * 100;
+      targetMeterPercentWidth = (value / max - min) * 100;
 
       // If the target width and current width are different, begin updating the meter
       if (meterPercentWidth !== targetMeterPercentWidth && updateHandle === null) {

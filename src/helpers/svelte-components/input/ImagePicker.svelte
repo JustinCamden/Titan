@@ -1,5 +1,6 @@
 <script>
    import {createEventDispatcher} from 'svelte';
+   import getApplication from '~/helpers/utility-functions/GetApplication.js';
 
    /** @type string The value that this input should modify. */
    export let value = void 0;
@@ -12,6 +13,9 @@
 
    /** @type EventDispatcher Dispatcher for component Events. */
    const eventDispatcher = createEventDispatcher();
+
+   /** @type Application The Svelte Component's Application. */
+   const application = getApplication();
 
    /**
     * Creates an image picker pointing to the current source path.

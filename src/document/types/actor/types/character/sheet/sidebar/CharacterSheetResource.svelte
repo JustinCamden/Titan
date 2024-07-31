@@ -102,8 +102,8 @@
          use:tooltipAction="{localize(`${key}.desc`)}"
       >
          <Meter
-            current={$document.system.resource[key].value}
             max={$document.system.resource[key].max}
+            value={$document.system.resource[key].value}
          />
       </div>
 

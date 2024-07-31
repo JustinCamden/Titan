@@ -3,8 +3,8 @@
    import {getContext} from 'svelte';
    import tooltipAction from '~/helpers/svelte-actions/TooltipAction.js';
    import DocumentImagePicker from '~/document/svelte-components/input/DocumentImagePicker.svelte';
-   import IconButton from '~/helpers/svelte-components/button/IconButton.svelte';
    import {LONG_REST_ICON, REMOVE_TEMP_EFFECTS_ICON, SHORT_REST_ICON, SPEND_RESOLVE_ICON} from '~/system/Icons.js';
+   import DocumentOwnerIconButton from '~/document/svelte-components/DocumentOwnerIconButton.svelte';
 
    /** @type object Reference to the Document store. */
    const document = getContext('document');
@@ -19,7 +19,7 @@
       class="button long-rest"
       use:tooltipAction="{localize('longRest.desc')}"
    >
-      <IconButton
+      <DocumentOwnerIconButton
          icon={LONG_REST_ICON}
          on:click={() => {
             $document.system.longRest();
@@ -32,7 +32,7 @@
       class="button short-rest"
       use:tooltipAction="{localize('shortRest.desc')}"
    >
-      <IconButton
+      <DocumentOwnerIconButton
          icon={SHORT_REST_ICON}
          on:click={() => {
             $document.system.shortRest();
@@ -45,7 +45,7 @@
       class="button clear"
       use:tooltipAction="{localize('removeCombatEffects')}"
    >
-      <IconButton
+      <DocumentOwnerIconButton
          icon={REMOVE_TEMP_EFFECTS_ICON}
          on:click={() => {
             $document.system.removeCombatEffects();
@@ -58,7 +58,7 @@
       class="button resolve"
       use:tooltipAction="{localize('spendX%Resolve').replace('X%', 1)}"
    >
-      <IconButton
+      <DocumentOwnerIconButton
          icon={SPEND_RESOLVE_ICON}
          on:click={() => {
             $document.system.spendResolve(1);
