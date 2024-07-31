@@ -73,7 +73,7 @@
       width: 100%;
 
       span {
-         background: var(--meter-color);
+         background: var(--titan-meter-color);
          border-radius: 20px;
          box-shadow: inset 0 2px 9px var(--titan-meter-shadow-1);
          display: block;

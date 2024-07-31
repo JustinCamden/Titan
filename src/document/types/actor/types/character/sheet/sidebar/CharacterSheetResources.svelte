@@ -1,87 +1,14 @@
 <script>
-   import {getContext} from 'svelte';
-   import getSetting from '~/helpers/utility-functions/GetSetting.js';
-   import localize from '~/helpers/utility-functions/Localize.js';
    import CharacterSheetResource
       from '~/document/types/actor/types/character/sheet/sidebar/CharacterSheetResource.svelte';
-   import {RESOLVE_ICON, STAMINA_ICON, WOUNDS_ICON} from '~/system/Icons.js';
-
-   /** @type object Reference to the Document store. */
-   const document = getContext('document');
+   import BorderedColumnList from '~/helpers/svelte-components/BorderedColumnList.svelte';
 </script>
 
-<!--Resources-->
-<div class="resources">
-   <!--Stamina-->
-   {#if $document.system.resource.stamina.maxBase > 0}
-      <div class="resource stamina">
-         <CharacterSheetResource
-            key={'stamina'}
-            icon={STAMINA_ICON}
-            resourceTooltip={`${localize('stamina.max')} * ${getSetting(
-               'staminaBaseMultiplier',
-            )}`}
-         />
-      </div>
-   {/if}
-
-   <!--Wounds-->
-   {#if $document.system.resource.wounds.maxBase > 0}
-      <div class="resource wounds">
-         <CharacterSheetResource
-            key={'wounds'}
-            icon={WOUNDS_ICON}
-            resourceTooltip={`${localize('wounds.max')} * ${getSetting(
-               'woundsBaseMultiplier',
-            )}`}
-         />
-      </div>
-   {/if}
-
-   <!--Resolve-->
-   {#if $document.system.resource.resolve.maxBase > 0}
-      <div class="resource resolve">
-         <CharacterSheetResource
-            key={'resolve'}
-            icon={RESOLVE_ICON}
-            resourceTooltip={`${localize('resolve.max')} * ${getSetting(
-               'resolveBaseMultiplier',
-            )}`}
-         />
-      </div>
-   {/if}
-</div>
-
-<style lang="scss">
-   .resources {
-      @include flex-column;
-      @include flex-group-top;
-
-      width: 100%;
-
-      .resource {
-         @include flex-row;
-
-         width: 100%;
-
-         &:not(:first-child) {
-            @include border-top;
-
-            padding-top: var(--titan-padding-standard);
-            margin-top: var(--titan-padding-standard);
-         }
-
-         &.stamina {
-            --meter-color: var(--titan-stamina-background);
-         }
-
-         &.wounds {
-            --meter-color: var(--titan-wounds-background);
-         }
-
-         &.resolve {
-            --meter-color: var(--titan-resolve-background);
-         }
-      }
-   }
-</style>
+<BorderedColumnList
+   entries={[
+      {resource: 'stamina'},
+      {resource: 'wounds'},
+      {resource: 'resolve'},
+      ]}
+   entryComponent={CharacterSheetResource}
+/>

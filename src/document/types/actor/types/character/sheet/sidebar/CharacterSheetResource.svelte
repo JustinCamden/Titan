@@ -4,123 +4,87 @@
    import tooltipAction from '~/helpers/svelte-actions/TooltipAction.js';
    import DocumentIntegerInput from '~/document/svelte-components/input/DocumentIntegerInput.svelte';
    import Meter from '~/helpers/svelte-components/Meter.svelte';
-   import ModifiedValueLabel from '~/helpers/svelte-components/label/ModifiedValueLabel.svelte';
+   import ModifiableStatValueLabel from '~/helpers/svelte-components/label/ModifiableStatValueLabel.svelte';
+   import {getIcon} from '~/system/Icons.js';
 
-   // Resource key
-   export let key = void 0;
-   export let icon = void 0;
-   export let resourceTooltip = void 0;
+   /** @type string The Resource that this component represents. */
+   export let resource = void 0;
+
+   /** @type string The Icon that represents this stat. */
+   export let icon = getIcon(resource);
 
    /** @type object Reference to the Document store. */
    const document = getContext('document');
-
-   // Calculate the tooltipAction for the max value
-   /**
-    * @param maxBase
-    * @param equipment
-    * @param effect
-    * @param ability
-    * @param staticMod
-    */
-   function getTotalValueTooltip(
-      maxBase,
-      equipment,
-      effect,
-      ability,
-      staticMod,
-   ) {
-      // Base label
-      let retVal = `<p>${resourceTooltip}</p><p>${localize(
-         'base',
-      )}: ${maxBase}</p>`;
-
-      // Equipment
-      if (equipment !== 0) {
-         retVal += `<p>${localize('equipment')}: ${equipment}</p>`;
-      }
-
-      // Abilities
-      if (ability !== 0) {
-         retVal += `<p>${localize('abilities')}: ${ability}</p>`;
-      }
-
-      // Effects
-      if (effect !== 0) {
-         retVal += `<p>${localize('effects')}: ${effect}</p>`;
-      }
-
-      // Static mod
-      if (staticMod !== 0) {
-         retVal += `<p>${localize('mod')}: ${staticMod}</p>`;
-      }
-
-      return retVal;
-   }
-
-   $: totalValueTooltip = getTotalValueTooltip(
-      $document.system.resource[key].maxBase,
-      $document.system.resource[key].mod.equipment,
-      $document.system.resource[key].mod.effect,
-      $document.system.resource[key].mod.ability,
-      $document.system.resource[key].mod.static,
-   );
 </script>
 
-<div class="resource">
-   <!--Label row-->
+<div class="container">
+   <!--Label Row-->
    <div class="row">
-      <div class="spacer">
-         <i class={icon}/>
-      </div>
+
+      <!--Icon-->
+      <i class={`${icon} side`}/>
 
       <!--Label-->
-      <span class="label" use:tooltipAction="{localize(`${key}.desc`)}">{localize(key)}</span>
+      <div class="middle" use:tooltipAction="{localize(`${resource}.desc`)}">
+
+         <!--Spacer to center the label-->
+         <div class="side"/>
+
+         <!--Label-->
+         <div class="label">
+            {localize(resource)}
+         </div>
+
+         <!--Plus Sign-->
+         <div class=" side">+</div>
+      </div>
 
       <!--Static Mod-->
-      <div class="static-mod">
-         <div class="symbol">+</div>
-         <div class="input">
-            <DocumentIntegerInput
-               bind:value={$document.system.resource[key].mod.static}
-            />
-         </div>
+      <div class="side">
+         <DocumentIntegerInput
+            bind:value={$document.system.resource[resource].mod.static}
+         />
       </div>
    </div>
 
    <!--Meter bar row-->
    <div class="row">
+
       <!--Current Value Input-->
-      <div class="input">
+      <div class="side">
          <DocumentIntegerInput
-            bind:value={$document.system.resource[key].value}
+            bind:value={$document.system.resource[resource].value}
          />
       </div>
 
-      <!--The Meter-->
+      <!--Meter-->
       <div
-         class="meter {key}"
-         use:tooltipAction="{localize(`${key}.desc`)}"
+         class="middle {resource} "
+         use:tooltipAction="{localize(`${resource}.desc`)}"
       >
          <Meter
-            max={$document.system.resource[key].max}
-            value={$document.system.resource[key].value}
+            max={$document.system.resource[resource].max}
+            value={$document.system.resource[resource].value}
          />
       </div>
 
-      <!--Max Value Display-->
-      <div class="value" use:tooltipAction="{totalValueTooltip}">
-         <ModifiedValueLabel
-            baseValue={$document.system.resource[key].maxBase +
-               $document.system.resource[key].mod.equipment +
-               $document.system.resource[key].mod.ability}
-            currentValue={$document.system.resource[key].max}
+      <!--Max Value-->
+      <div class="side">
+         <ModifiableStatValueLabel
+            abilityMod={$document.system.resource[resource].mod.ability}
+            baseTooltip={localize(`${resource}.maxValue`)}
+            baseValue={$document.system.resource[resource].maxBase}
+            effectMod={$document.system.resource[resource].mod.effect}
+            equipmentMod={$document.system.resource[resource].mod.equipment}
+            staticMod={$document.system.resource[resource].mod.static}
+            value={$document.system.resource[resource].max}
          />
       </div>
    </div>
 </div>
 
 <style lang="scss">
-   .resource {
+   .container {
       @include flex-column;
       @include flex-group-top;
 
@@ -139,58 +103,32 @@
             margin-top: var(--titan-padding-standard);
          }
 
-         .label {
-            @include flex-row;
+         .side {
             @include flex-group-center;
-
-            font-weight: bold;
-         }
-
-         .static-mod {
             @include flex-row;
-            @include flex-group-right;
-
-            width: 44px;
-         }
-
-         .input {
-            @include flex-row;
-            @include flex-group-center;
 
             width: 28px;
          }
 
-         .symbol {
+         .middle {
             @include flex-row;
-
-            margin-right: var(--titan-padding-standard);
-         }
-
-         .value {
-            @include flex-row;
-            @include flex-group-center;
+            @include flex-space-between;
 
             height: 100%;
-            min-width: 28px;
-         }
-
-         .spacer {
-            @include flex-row;
-
-            width: 44px;
-
-            i {
-               margin-left: 6px;
-            }
-         }
-
-         .meter {
-            @include flex-row;
-            @include flex-group-center;
-
-            height: 100%;
-            flex: 1;
             width: 100%;
+            flex: 1;
+
+            &.resolve {
+               --titan-meter-color: var(--titan-resolve-background);
+            }
+
+            &.stamina {
+               --titan-meter-color: var(--titan-stamina-background);
+            }
+
+            &.wounds {
+               --titan-meter-color: var(--titan-wounds-background);
+            }
          }
       }
    }

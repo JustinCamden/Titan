@@ -28,7 +28,9 @@
          <DocumentOwnerButton on:click={onClick} tooltip={localize(`${rating}.desc`)}>
             <!--Icon-->
             <i class="{icon}"/>
-            <div class="sign">
+
+            <!--Label-->
+            <div class="label">
                {localize(rating)}
             </div>
          </DocumentOwnerButton>
@@ -48,7 +50,7 @@
    <div class="stats">
 
       <!--Plus Sign-->
-      <div class="sign">+</div>
+      <div class="label symbol">+</div>
 
       <!--Static Mod-->
       <div class="input">
@@ -58,7 +60,7 @@
       </div>
 
       <!--Equal Sign-->
-      <div class="sign">=</div>
+      <div class="label">=</div>
 
       <!--Total Value-->
       <div class="value">
@@ -87,7 +89,7 @@
          width: 20px;
       }
 
-      .sign {
+      .label {
          @include flex-row;
          @include flex-group-center;
 

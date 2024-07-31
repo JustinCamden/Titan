@@ -85,13 +85,6 @@
             width: 28px;
          }
 
-         .sign {
-            @include flex-row;
-            @include flex-group-center;
-
-            height: 100%;
-         }
-
          .value {
             @include flex-row;
             @include flex-group-center;

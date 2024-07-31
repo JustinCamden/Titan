@@ -43,7 +43,7 @@
       <!--Total Value-->
       <div class="value">
          <ModifiableStatValueLabel
-            baseTooltip={localize(`${mod}.base`)}
+            baseTooltip={localize(`${mod}.baseValue`)}
             baseValue={0}
             effectMod={$document.system.mod[mod].mod.effect}
             equipmentMod={$document.system.mod[mod].mod.equipment}
