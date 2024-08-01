@@ -21,6 +21,8 @@
    <div class="label" use:tooltipAction="{localize(`${mod}.desc`)}">
       <!--Icon-->
       <i class="{icon}"/>
+
+      <!--Label Text-->
       {localize(mod)}
    </div>
 

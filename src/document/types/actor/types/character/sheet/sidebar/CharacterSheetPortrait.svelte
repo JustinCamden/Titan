@@ -14,7 +14,7 @@
    <div class="image">
       <DocumentImagePicker alt={'character portrait'} bind:value={$document.img}/>
    </div>
-   <!--Take a long Rest Button-->
+   <!--Take a Long Rest Button-->
    <div
       class="button long-rest"
       use:tooltipAction="{localize('longRest.desc')}"
@@ -27,7 +27,7 @@
       />
    </div>
 
-   <!--Take a Short rest Button-->
+   <!--Take a Short Rest Button-->
    <div
       class="button short-rest"
       use:tooltipAction="{localize('shortRest.desc')}"
@@ -40,7 +40,7 @@
       />
    </div>
 
-   <!--Remove Temp Effects button-->
+   <!--Remove Combat Effects button-->
    <div
       class="button clear"
       use:tooltipAction="{localize('removeCombatEffects')}"

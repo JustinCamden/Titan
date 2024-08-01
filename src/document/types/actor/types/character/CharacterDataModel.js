@@ -197,7 +197,7 @@ export default class CharacterDataModel extends ActorDataModel {
 
       // Add speeds
       schema.speed = createSchemaField({
-         stride: createBaseStatField(),
+         stride: createBaseStatField(5),
          fly: createBaseStatField(),
          climb: createBaseStatField(),
          swim: createBaseStatField(),

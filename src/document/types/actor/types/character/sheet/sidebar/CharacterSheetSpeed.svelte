@@ -3,70 +3,24 @@
    import {getContext} from 'svelte';
    import tooltipAction from '~/helpers/svelte-actions/TooltipAction.js';
    import DocumentIntegerInput from '~/document/svelte-components/input/DocumentIntegerInput.svelte';
-   import ModifiedValueLabel from '~/helpers/svelte-components/label/ModifiedValueLabel.svelte';
+   import {getIcon} from '~/system/Icons.js';
+   import ModifiableStatValueLabel from '~/helpers/svelte-components/label/ModifiableStatValueLabel.svelte';
 
-   // The key / name of the speed
-   export let key;
+   /** @type string The Speed that this component represents. */
+   export let speed;
+
+   /** @type string The Icon that represents this stat. */
+   const icon = getIcon(speed);
 
    /** @type object Reference to the Document store. */
    const document = getContext('document');
-
-   // Calculate the tooltipAction for the max value
-   /**
-    * @param baseValue
-    * @param equipment
-    * @param effect
-    * @param ability
-    * @param staticMod
-    */
-   function getTotalValueTooltip(
-      baseValue,
-      equipment,
-      effect,
-      ability,
-      staticMod,
-   ) {
-      // Base label
-      let retVal = `<p>${localize('base')}: ${baseValue}</p>`;
-
-      // Equipment
-      if (equipment !== 0) {
-         retVal += `<p>${localize('equipment')}: ${equipment}</p>`;
-      }
-
-      // Abilities
-      if (ability !== 0) {
-         retVal += `<p>${localize('abilities')}: ${ability}</p>`;
-      }
-
-      // Effects
-      if (effect !== 0) {
-         retVal += `<p>${localize('effects')}: ${effect}</p>`;
-      }
-
-      // Static mod
-      if (staticMod !== 0) {
-         retVal += `<p>${localize('mod')}: ${staticMod}</p>`;
-      }
-
-      return retVal;
-   }
-
-   $: totalValueTooltip = getTotalValueTooltip(
-      $document.system.speed[key].baseValue,
-      $document.system.speed[key].mod.equipment,
-      $document.system.speed[key].mod.effect,
-      $document.system.speed[key].mod.ability,
-      $document.system.speed[key].mod.static,
-   );
 </script>
 
-<!--Speeds-->
-<div class="speed">
+<div class="container">
    <!--Label-->
-   <div class="label" use:tooltipAction="{localize(`${key}.desc`)}">
+   <div class="label" use:tooltipAction="{localize(`${speed}.desc`)}">
       <!--Icon-->
-      {localize(key)}
+      {localize(speed)}
    </div>
 
    <!--Stats-->
@@ -74,33 +28,39 @@
       <!--Base Value-->
       <div class="input">
          <DocumentIntegerInput
-            bind:value={$document.system.speed[key].baseValue}
+            bind:value={$document.system.speed[speed].baseValue}
          />
       </div>
+
+      <!--Plus Sign-->
       <div class="symbol">+</div>
 
       <!--Static Mod-->
       <div class="input">
          <DocumentIntegerInput
-            bind:value={$document.system.speed[key].mod.static}
+            bind:value={$document.system.speed[speed].mod.static}
          />
       </div>
+
+      <!--Equal Sign-->
       <div class="symbol">=</div>
 
       <!--Total Value-->
-      <div class="value" use:tooltipAction="{totalValueTooltip}">
-         <ModifiedValueLabel
-            baseValue={$document.system.speed[key].baseValue +
-               $document.system.speed[key].mod.ability +
-               $document.system.speed[key].mod.equipment}
-            currentValue={$document.system.speed[key].value}
+      <div class="value">
+         <ModifiableStatValueLabel
+            baseTooltip={localize(`${speed}.desc`)}
+            baseValue={$document.system.speed[speed].baseValue}
+            effectMod={$document.system.speed[speed].mod.effect}
+            equipmentMod={$document.system.speed[speed].mod.equipment}
+            staticMod={$document.system.speed[speed].mod.static}
+            value={$document.system.speed[speed].value}
          />
       </div>
    </div>
 </div>
 
 <style lang="scss">
-   .speed {
+   .container {
       @include flex-row;
       @include flex-space-between;
 

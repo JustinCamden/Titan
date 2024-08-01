@@ -12,7 +12,7 @@
    const document = getContext('document');
 </script>
 
-<div class="stat">
+<div class="container">
    <!--Label Button-->
    <div class="button">
       <CharacterSheetCondensedAttributeCheckButton {attribute}/>
@@ -56,7 +56,7 @@
 </div>
 
 <style lang="scss">
-   .stat {
+   .container {
       @include flex-row;
       @include flex-space-evenly;
 
